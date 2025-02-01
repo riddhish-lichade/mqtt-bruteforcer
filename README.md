@@ -35,11 +35,11 @@ python3 mqtt-bruteforcer.py -h
 
 Brute-force both usernames and passwords
 ```bash
-python mqtt-bruteforcer.py -b <BROKER_IP> -p <PORT> -U usernames.txt -P passwords.txt
+python3 mqtt-bruteforcer.py -b <BROKER_IP> -p <PORT> -U usernames.txt -P passwords.txt
 ```
 Brute-force only passwords (if you already know the username)
 ```bash
-python mqtt-bruteforcer.py -b <BROKER_IP> -p <PORT> -u <USERNAME> -P passwords.txt
+python3 mqtt-bruteforcer.py -b <BROKER_IP> -p <PORT> -u <USERNAME> -P passwords.txt
 ```
 
 
