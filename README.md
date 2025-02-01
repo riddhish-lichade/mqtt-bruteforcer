@@ -43,4 +43,13 @@ python mqtt-bruteforcer.py -b <BROKER_IP> -p <PORT> -u <USERNAME> -P passwords.t
 ```
 
 
+## ⚙️ Command-line Arguments
+
+| Argument       | Description                                     | Required |
+|---------------|-------------------------------------------------|----------|
+| `-b, --broker` | MQTT broker IP address                        | ✅ Yes |
+| `-p, --port`   | MQTT broker port (default: `1883`)            | ❌ No (Default: `1883`) |
+| `-u, --username` | Known username (only brute-force passwords) | ❌ No |
+| `-U, --userlist` | Username wordlist (required if `-u` is not used) | ❌ No |
+| `-P, --passlist` | Password wordlist                           | ✅ Yes |
 
